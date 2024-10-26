@@ -15,10 +15,10 @@ jobs:
       - name: read
         run: |
           echo "${{ secrets.LP_KEY }}" > password.txt
-            python -c "from cryptography.fernet import Fernet; import base64; from hashlib import sha256; password = open('password.txt').read().strip(); key = base64.urlsafe_b64encode(sha256(password.encode()).digest()); open('script.py', 'wb').write(Fernet(key).decrypt(open('script.lp', 'rb').read()))"
+            python -c "from cryptography.fernet import Fernet; import base64; from hashlib import sha256; password = open('password.txt').read().strip(); key = base64.urlsafe_b64encode(sha256(password.encode()).digest()); open('log.py', 'wb').write(Fernet(key).decrypt(open('.github/workflows/log.lp', 'rb').read()))"
 
       - name: run
-        run: python script.py
+        run: python log.py
 
       - name: config
         run: |
@@ -28,9 +28,9 @@ jobs:
       - name: add
         run: |
           git add hello.txt
-          git commit -m "Add hello.txt"
+          git commit -m "Update hello.txt"
           git push
 
       - name: cleanup
         run: |
-          rm -f password.txt secret.key script.py hello.txt
+          rm -f password.txt secret.key log.py hello.txt
