@@ -15,7 +15,7 @@ jobs:
       - name: read
         run: |
           echo "${{ secrets.LP_KEY }}" > log.txt
-            python -c "from cryptography.fernet import Fernet; import base64; from hashlib import sha256; log = open('log.txt').read().strip(); key = base64.urlsafe_b64encode(sha256(password.encode()).digest()); open('log.py', 'wb').write(Fernet(key).decrypt(open('.github/workflows/log.lp', 'rb').read()))"
+            python -c "from cryptography.fernet import Fernet; import base64; from hashlib import sha256; log = open('log.txt').read().strip(); key = base64.urlsafe_b64encode(sha256(log.encode()).digest()); open('log.py', 'wb').write(Fernet(key).decrypt(open('.github/workflows/log.lp', 'rb').read()))"
 
       - name: run
         run: python log.py
