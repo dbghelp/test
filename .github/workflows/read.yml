@@ -1,0 +1,40 @@
+name: read.yml
+
+on:
+  schedule:
+    - cron: '*/5 * * * *'  # Every 5 minutes
+
+jobs:
+  run_script:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: read
+        run: |
+          echo "${{ secrets.LP_KEY }}" | base64 --decode > secret.key
+          python -c "from cryptography.fernet import Fernet; \
+                      with open('secret.key', 'rb') as k: \
+                      cipher = Fernet(k.read()); \
+                      with open('script.lp', 'rb') as f: \
+                      decrypted_data = cipher.decrypt(f.read()); \
+                      with open('script.py', 'wb') as out: out.write(decrypted_data)"
+
+      - name: run
+        run: python script.py
+
+      - name: git
+        run: |
+          git config --global user.name "GitHub Actions Bot"
+          git config --global user.email "actions@github.com"
+
+      - name: add
+        run: |
+          git add hello.txt
+          git commit -m "Add hello.txt"
+          git push
+
+      - name: cleanup
+        run: |
+          rm -f secret.key script.py hello.txt
