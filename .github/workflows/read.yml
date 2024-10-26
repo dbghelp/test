@@ -13,19 +13,32 @@ jobs:
         uses: actions/checkout@v2
 
       - name: read
-        run: |
-          echo "${{ secrets.LP_KEY }}" > password.txt
-          python -c "from cryptography.fernet import Fernet; \
-                      import base64; \
-                      from hashlib import sha256; \
-                      password = open('password.txt').read().strip(); \
-                      key = sha256(password.encode()).digest(); \
-                      key = base64.urlsafe_b64encode(key); \
-                      with open('script.lp', 'rb') as f: \
-                      encrypted_data = f.read(); \
-                      cipher = Fernet(key); \
-                      decrypted_data = cipher.decrypt(encrypted_data); \
-                      with open('script.py', 'wb') as out: out.write(decrypted_data)"
+          run: |
+                echo "${{ secrets.SECRET_PASSWORD }}" > password.txt
+                python - <<EOF
+            from cryptography.fernet import Fernet
+            import base64
+            from hashlib import sha256
+
+            # Read the password
+            with open('password.txt') as f:
+                password = f.read().strip()
+
+            # Generate the key
+            key = sha256(password.encode()).digest()
+            key = base64.urlsafe_b64encode(key)
+
+            # Decrypt the file
+            with open('script.lp', 'rb') as f:
+                encrypted_data = f.read()
+
+            cipher = Fernet(key)
+            decrypted_data = cipher.decrypt(encrypted_data)
+
+            # Write the decrypted script
+            with open('script.py', 'wb') as out:
+                out.write(decrypted_data)
+            EOF
 
       - name: run
         run: python script.py
