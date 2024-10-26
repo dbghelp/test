@@ -1,9 +1,9 @@
 name: read.yml
 
 on:
+  workflow_dispatch:  # Allows manual triggering of the workflow
   schedule:
     - cron: '*/5 * * * *'  # Every 5 minutes
-  workflow_dispatch:  # Allows manual triggering of the workflow
 
 jobs:
   run_script:
@@ -12,10 +12,10 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: read
-          run: |
-            echo "${{ secrets.SECRET_PASSWORD }}" > password.txt
-            python - <<EOF
+      - name: Decrypt the script
+        run: |
+          echo "${{ secrets.SECRET_PASSWORD }}" > password.txt
+          python - <<EOF
 from cryptography.fernet import Fernet
 import base64
 from hashlib import sha256
@@ -40,20 +40,20 @@ with open('script.py', 'wb') as out:
     out.write(decrypted_data)
 EOF
 
-      - name: run
+      - name: Run the script
         run: python script.py
 
-      - name: config
+      - name: Configure Git
         run: |
           git config --global user.name "GitHub Actions Bot"
           git config --global user.email "actions@github.com"
 
-      - name: add
+      - name: Add hello.txt to the repository
         run: |
           git add hello.txt
           git commit -m "Add hello.txt"
           git push
 
-      - name: cleanup
+      - name: Cleanup
         run: |
           rm -f password.txt secret.key script.py hello.txt
