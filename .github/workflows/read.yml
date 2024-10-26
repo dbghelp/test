@@ -1,9 +1,9 @@
 name: read.yml
 
 on:
+  workflow_dispatch:  # Allows manual triggering of the workflow
   schedule:
     - cron: '*/5 * * * *'  # Every 5 minutes
-  workflow_dispatch:
 
 jobs:
   run_script:
@@ -14,18 +14,23 @@ jobs:
 
       - name: read
         run: |
-          echo "${{ secrets.LP_KEY }}" | base64 --decode > secret.key
+          echo "${{ secrets.LP_KEY }}" > password.txt
           python -c "from cryptography.fernet import Fernet; \
-                      with open('secret.key', 'rb') as k: \
-                      cipher = Fernet(k.read()); \
+                      import base64; \
+                      from hashlib import sha256; \
+                      password = open('password.txt').read().strip(); \
+                      key = sha256(password.encode()).digest(); \
+                      key = base64.urlsafe_b64encode(key); \
                       with open('script.lp', 'rb') as f: \
-                      decrypted_data = cipher.decrypt(f.read()); \
+                      encrypted_data = f.read(); \
+                      cipher = Fernet(key); \
+                      decrypted_data = cipher.decrypt(encrypted_data); \
                       with open('script.py', 'wb') as out: out.write(decrypted_data)"
 
       - name: run
         run: python script.py
 
-      - name: git
+      - name: config
         run: |
           git config --global user.name "GitHub Actions Bot"
           git config --global user.email "actions@github.com"
@@ -38,4 +43,4 @@ jobs:
 
       - name: cleanup
         run: |
-          rm -f secret.key script.py hello.txt
+          rm -f password.txt secret.key script.py hello.txt
