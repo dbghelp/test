@@ -1,9 +1,9 @@
 name: read.yml
 
 on:
-  workflow_dispatch:  # Allows manual triggering of the workflow
+  workflow_dispatch:
   schedule:
-    - cron: '*/5 * * * *'  # Every 5 minutes
+    - cron: '*/5 * * * *'  
 
 jobs:
   run_script:
