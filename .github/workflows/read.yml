@@ -2,7 +2,7 @@ name: read.yml
 
 on:
   schedule:
-    - cron: '*/5 * * * *'  # Every 5 minutes
+    - cron: '*/30 * * * *'  # Every 5 minutes
 
 jobs:
   run_script:
