@@ -14,7 +14,7 @@ jobs:
 
       - name: read
         run: |
-          echo "${{ LP_KEY }}" | base64 --decode > secret.key
+          echo "${{ secrets.LP_KEY }}" | base64 --decode > secret.key
           python -c "from cryptography.fernet import Fernet; \
                       with open('secret.key', 'rb') as k: \
                       cipher = Fernet(k.read()); \
