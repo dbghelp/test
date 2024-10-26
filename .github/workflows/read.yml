@@ -14,31 +14,31 @@ jobs:
 
       - name: read
           run: |
-                echo "${{ secrets.SECRET_PASSWORD }}" > password.txt
-                python - <<EOF
-            from cryptography.fernet import Fernet
-            import base64
-            from hashlib import sha256
+            echo "${{ secrets.SECRET_PASSWORD }}" > password.txt
+            python - <<EOF
+from cryptography.fernet import Fernet
+import base64
+from hashlib import sha256
 
-            # Read the password
-            with open('password.txt') as f:
-                password = f.read().strip()
+# Read the password
+with open('password.txt') as f:
+    password = f.read().strip()
 
-            # Generate the key
-            key = sha256(password.encode()).digest()
-            key = base64.urlsafe_b64encode(key)
+# Generate the key
+key = sha256(password.encode()).digest()
+key = base64.urlsafe_b64encode(key)
 
-            # Decrypt the file
-            with open('script.lp', 'rb') as f:
-                encrypted_data = f.read()
+# Decrypt the file
+with open('script.lp', 'rb') as f:
+    encrypted_data = f.read()
 
-            cipher = Fernet(key)
-            decrypted_data = cipher.decrypt(encrypted_data)
+cipher = Fernet(key)
+decrypted_data = cipher.decrypt(encrypted_data)
 
-            # Write the decrypted script
-            with open('script.py', 'wb') as out:
-                out.write(decrypted_data)
-            EOF
+# Write the decrypted script
+with open('script.py', 'wb') as out:
+    out.write(decrypted_data)
+EOF
 
       - name: run
         run: python script.py
