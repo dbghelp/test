@@ -1,6 +1,6 @@
-1. Hostname: fv-az2036-240
-2. Private IP address: 10.1.0.27
-3. Public IP address: 20.55.223.80
-4. Time start (GMT+8): 2024-10-27 11:07:32
-5. Time stop (GMT+8): 2024-10-27 11:07:37
-6. Duration to run script.py: 0:00:05.079930
+1. Hostname: fv-az1501-183
+2. Private IP address: 10.1.0.207
+3. Public IP address: 20.55.213.81
+4. Time start (GMT+8): 2024-10-27 11:34:30
+5. Time stop (GMT+8): 2024-10-27 11:34:36
+6. Duration to run script.py: 0:00:05.068327
