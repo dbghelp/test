@@ -37,7 +37,7 @@ jobs:
         run: |
           cd test2
           git add mewatch.xml
-          git commit -m "Update mewatch.xml"
+          git diff --cached --exit-code || git commit -m "Update mewatch.xml"
           git push origin main
 
       - name: cleanup
