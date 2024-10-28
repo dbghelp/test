@@ -3,7 +3,7 @@ name: read.yml
 on:
   workflow_dispatch:
   schedule:
-    - cron: '*/5 * * * *'  
+    - cron: '15 0-23/3 * * *'
 
 jobs:
   run_script:
@@ -42,4 +42,4 @@ jobs:
 
       - name: cleanup
         run: |
-          rm -f log.txt log.py mewatch.xml test2
+          rm -rf log.txt log.py mewatch.xml test2
