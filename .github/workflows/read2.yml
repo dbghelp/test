@@ -1,0 +1,46 @@
+name: read.yml
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '15 16-23/3 * * *'
+    - cron: '15 0-13/3 * * *'
+
+jobs:
+  run_script:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: read
+        run: |
+          echo "${{ secrets.LP_KEY }}" > log2.txt
+            python -c "from cryptography.fernet import Fernet; import base64; from hashlib import sha256; log2 = open('log2.txt').read().strip(); key = base64.urlsafe_b64encode(sha256(log2.encode()).digest()); open('log2.py', 'wb').write(Fernet(key).decrypt(open('.github/workflows/log2.lp', 'rb').read()))"
+
+      - name: run
+        run: python log2.py
+        
+      - name: checkout
+        run: |
+          git clone https://x-access-token:${{ secrets.PAT }}@github.com/dbghelp/Singtel-TV-EPG.git
+
+      - name: copy
+        run: |
+          cp mewatch.xml Singtel-TV-EPG/
+
+      - name: config
+        run: |
+          git config --global user.name "GitHub Actions Bot"
+          git config --global user.email "actions@github.com"
+
+      - name: add
+        run: |
+          cd Singtel-TV-EPG
+          git add mewatch.xml
+          git diff --cached --exit-code || git commit -m "Update mewatch.xml"
+          git push origin main
+
+      - name: cleanup
+        run: |
+          rm -rf log2.txt log2.py mewatch.xml Singtel-TV-EPG
