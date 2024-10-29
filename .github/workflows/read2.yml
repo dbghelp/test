@@ -25,7 +25,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install -r requirements.txt
+          pip install -r .github/workflows/requirements.txt
 
       - name: run
         run: python log2.py
