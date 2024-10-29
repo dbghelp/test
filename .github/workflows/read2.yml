@@ -37,7 +37,7 @@ jobs:
 
       - name: copy
         run: |
-          cp mewatch.xml Singtel-TV-EPG/
+          cp singtel.xml Singtel-TV-EPG/
 
       - name: config
         run: |
@@ -47,10 +47,10 @@ jobs:
       - name: add
         run: |
           cd Singtel-TV-EPG
-          git add mewatch.xml
-          git diff --cached --exit-code || git commit -m "Update mewatch.xml"
+          git add singtel.xml
+          git diff --cached --exit-code || git commit -m "Update singtel.xml"
           git push origin main
 
       - name: cleanup
         run: |
-          rm -rf log2.txt log2.py mewatch.xml Singtel-TV-EPG
+          rm -rf log2.txt log2.py singtel.xml Singtel-TV-EPG
