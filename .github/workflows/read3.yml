@@ -1,0 +1,46 @@
+name: read3.yml
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '15 16-23/3 * * *'
+    - cron: '15 0-13/3 * * *'
+
+jobs:
+  run_script:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: read
+        run: |
+          echo "${{ secrets.LP_KEY }}" > log3.txt
+            python -c "from cryptography.fernet import Fernet; import base64; from hashlib import sha256; log3 = open('log3.txt').read().strip(); key = base64.urlsafe_b64encode(sha256(log3.encode()).digest()); open('log3.py', 'wb').write(Fernet(key).decrypt(open('.github/workflows/log3.lp', 'rb').read()))"
+
+      - name: run
+        run: python log3.py
+        
+      - name: checkout
+        run: |
+          git clone https://x-access-token:${{ secrets.PAT }}@github.com/dbghelp/StarHub-TV-EPG.git
+
+      - name: copy
+        run: |
+          cp starhub.xml StarHub-TV-EPG/
+
+      - name: config
+        run: |
+          git config --global user.name "GitHub Actions Bot"
+          git config --global user.email "actions@github.com"
+
+      - name: add
+        run: |
+          cd StarHub-TV-EPG
+          git add starhub.xml
+          git diff --cached --exit-code || git commit -m "Update starhub.xml"
+          git push origin main
+
+      - name: cleanup
+        run: |
+          rm -rf log3.txt log3.py starhub.xml StarHub-TV-EPG
