@@ -1,4 +1,4 @@
-name: read.yml
+name: read2.yml
 
 on:
   workflow_dispatch:
