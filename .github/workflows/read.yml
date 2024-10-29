@@ -22,11 +22,11 @@ jobs:
         
       - name: checkout
         run: |
-          git clone https://x-access-token:${{ secrets.PAT }}@github.com/dbghelp/test2.git
+          git clone https://x-access-token:${{ secrets.PAT }}@github.com/dbghelp/mewatch-EPG.git
 
       - name: copy
         run: |
-          cp mewatch.xml test2/
+          cp mewatch.xml mewatch-EPG/
 
       - name: config
         run: |
@@ -35,11 +35,11 @@ jobs:
 
       - name: add
         run: |
-          cd test2
+          cd mewatch-EPG
           git add mewatch.xml
           git diff --cached --exit-code || git commit -m "Update mewatch.xml"
           git push origin main
 
       - name: cleanup
         run: |
-          rm -rf log.txt log.py mewatch.xml test2
+          rm -rf log.txt log.py mewatch.xml mewatch-EPG
