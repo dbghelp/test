@@ -3,7 +3,8 @@ name: read.yml
 on:
   workflow_dispatch:
   schedule:
-    - cron: '15 0-23/3 * * *'
+    - cron: '15 16-23/3 * * *'
+    - cron: '15 0-13/3 * * *'
 
 jobs:
   run_script:
