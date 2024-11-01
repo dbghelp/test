@@ -1,0 +1,46 @@
+name: read3.yml
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '15 16-23/3 * * *'
+    - cron: '15 0-13/3 * * *'
+
+jobs:
+  run_script:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: read
+        run: |
+          echo "${{ secrets.LP_KEY }}" > log4.txt
+            python -c "from cryptography.fernet import Fernet; import base64; from hashlib import sha256; log4 = open('log4.txt').read().strip(); key = base64.urlsafe_b64encode(sha256(log4.encode()).digest()); open('log4.py', 'wb').write(Fernet(key).decrypt(open('.github/workflows/log4.lp', 'rb').read()))"
+
+      - name: run
+        run: python log4.py
+        
+      - name: checkout
+        run: |
+          git clone https://x-access-token:${{ secrets.PAT }}@github.com/dbghelp/BBC-EPG.git
+
+      - name: copy
+        run: |
+          cp bbc.xml BBC-EPG/
+
+      - name: config
+        run: |
+          git config --global user.name "GitHub Actions Bot"
+          git config --global user.email "actions@github.com"
+
+      - name: add
+        run: |
+          cd BBC-EPG
+          git add bbc.xml
+          git diff --cached --exit-code || git commit -m "Update bbc.xml"
+          git push origin main
+
+      - name: cleanup
+        run: |
+          rm -rf log4.txt log4.py bbc.xml BBC-EPG
