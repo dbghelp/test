@@ -18,6 +18,11 @@ jobs:
           echo "${{ secrets.LP_KEY }}" > log4.txt
             python -c "from cryptography.fernet import Fernet; import base64; from hashlib import sha256; log4 = open('log4.txt').read().strip(); key = base64.urlsafe_b64encode(sha256(log4.encode()).digest()); open('log4.py', 'wb').write(Fernet(key).decrypt(open('.github/workflows/log4.lp', 'rb').read()))"
 
+      - name: install
+          run: |
+            python -m pip install --upgrade pip
+            pip install beautifulsoup4 requests  # Install bs4 and other dependencies
+        
       - name: run
         run: python log4.py
         
