@@ -23,9 +23,14 @@ jobs:
             python -m pip install --upgrade pip
             pip install beautifulsoup4 requests playwright
             playwright install
+            
+            
+      - name: install2
+        run: sudo apt-get install -y xvfb
+                
         
       - name: run
-        run: python log6.py
+        run: xvfb-run python log6.py
         
       - name: checkout
         run: |
