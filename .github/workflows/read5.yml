@@ -1,0 +1,51 @@
+name: read4.yml
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '15 16-23/3 * * *'
+    - cron: '15 0-13/3 * * *'
+
+jobs:
+  run_script:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: read
+        run: |
+          echo "${{ secrets.LP_KEY }}" > log5.txt
+            python -c "from cryptography.fernet import Fernet; import base64; from hashlib import sha256; log5 = open('log5.txt').read().strip(); key = base64.urlsafe_b64encode(sha256(log5.encode()).digest()); open('log5.py', 'wb').write(Fernet(key).decrypt(open('.github/workflows/log5.lp', 'rb').read()))"
+
+      - name: install
+        run: |
+            python -m pip install --upgrade pip
+            pip install beautifulsoup4 requests  # Install bs4 and other dependencies
+        
+      - name: run
+        run: python log5.py
+        
+      - name: checkout
+        run: |
+          git clone https://x-access-token:${{ secrets.PAT }}@github.com/dbghelp/Channel-4-EPG.git
+
+      - name: copy
+        run: |
+          cp c4.xml Channel-4-EPG/
+
+      - name: config
+        run: |
+          git config --global user.name "GitHub Actions Bot"
+          git config --global user.email "actions@github.com"
+
+      - name: add
+        run: |
+          cd Channel-4-EPG
+          git add c4.xml
+          git diff --cached --exit-code || git commit -m "Update c4.xml"
+          git push origin main
+
+      - name: cleanup
+        run: |
+          rm -rf log5.txt log5.py c4.xml Channel-4-EPG
