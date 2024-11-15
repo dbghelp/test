@@ -26,14 +26,11 @@ jobs:
             
             
       - name: install2
-        run: sudo apt-get install -y xorg
+        run: sudo apt-get install -y xvfb
                 
         
       - name: run
-        run: |
-            Xorg -nolisten tcp &
-            export DISPLAY=:0
-            python log6.py
+        run: xvfb-run -a python log6.py
         
       - name: checkout
         run: |
