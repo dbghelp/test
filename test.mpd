@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<MPD xmlns="urn:mpeg:dash:schema:mpd:2011" type="dynamic" timeShiftBufferDepth="PT1H" minimumUpdatePeriod="PT3600S" mediaPresentationDuration="PT6239S">
+	<Period start="PT0S">
+		<AdaptationSet mimeType="video/mp4" segmentAlignment="true">
+			<Representation id="1" width="1920" height="1080" bandwidth="2000000">
+				<BaseURL>https://k-toggle.akamaized.net/edashncl/p/2082311/sp/208231100/serveFlavor/entryId/1_6bluo7k0/v/1/pv/1/ev/15/flavorId/1_,9p70fe2a,bvjuhges,oou8fy5n,3qogdvf4,avaz3jpr,vvj18zb6,/forceproxy/true/name/a.mp4.urlset/manifest.mpd</BaseURL>
+			</Representation>
+		</AdaptationSet>
+	</Period>
+	<Period start="PT1559S">
+		<AdaptationSet mimeType="video/mp4" segmentAlignment="true">
+			<Representation id="2" width="1920" height="1080" bandwidth="2000000">
+				<BaseURL>https://k-toggle.akamaized.net/edashncl/p/2082311/sp/208231100/serveFlavor/entryId/1_6bluo7k0/v/1/pv/1/ev/15/flavorId/1_,9p70fe2a,bvjuhges,oou8fy5n,3qogdvf4,avaz3jpr,vvj18zb6,/forceproxy/true/name/a.mp4.urlset/manifest.mpd</BaseURL>
+			</Representation>
+		</AdaptationSet>
+	</Period>
+	<Period start="PT3119S">
+		<AdaptationSet mimeType="video/mp4" segmentAlignment="true">
+			<Representation id="3" width="1920" height="1080" bandwidth="2000000">
+				<BaseURL>https://k-toggle.akamaized.net/edashncl/p/2082311/sp/208231100/serveFlavor/entryId/1_6bluo7k0/v/1/pv/1/ev/15/flavorId/1_,9p70fe2a,bvjuhges,oou8fy5n,3qogdvf4,avaz3jpr,vvj18zb6,/forceproxy/true/name/a.mp4.urlset/manifest.mpd</BaseURL>
+			</Representation>
+		</AdaptationSet>
+	</Period>
+	<Period start="PT4679S">
+		<AdaptationSet mimeType="video/mp4" segmentAlignment="true">
+			<Representation id="4" width="1920" height="1080" bandwidth="2000000">
+				<BaseURL>https://k-toggle.akamaized.net/edashncl/p/2082311/sp/208231100/serveFlavor/entryId/1_6bluo7k0/v/1/pv/1/ev/15/flavorId/1_,9p70fe2a,bvjuhges,oou8fy5n,3qogdvf4,avaz3jpr,vvj18zb6,/forceproxy/true/name/a.mp4.urlset/manifest.mpd</BaseURL>
+			</Representation>
+		</AdaptationSet>
+	</Period>
+</MPD>
