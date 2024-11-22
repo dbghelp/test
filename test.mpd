@@ -1,41 +1,31 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<MPD xmlns="urn:mpeg:dash:schema:mpd:2011" type="dynamic" mediaPresentationDuration="PT24H" timeShiftBufferDepth="PT1H" minimumUpdatePeriod="PT3600S">
-    <Period start="PT0S">
-        <AdaptationSet mimeType="video/mp4" segmentAlignment="true">
-            <Representation id="1" width="1920" height="1080" bandwidth="2000000">
-                <BaseURL>http://example.com/1.mpd</BaseURL>
-            </Representation>
-        </AdaptationSet>
-    </Period>
-
-    <Period start="PT3600S"> <!-- 1 hour -->
-        <AdaptationSet mimeType="video/mp4" segmentAlignment="true">
-            <Representation id="2" width="1920" height="1080" bandwidth="2000000">
-                <BaseURL>
-https://k-toggle.akamaized.net/edashncl/p/2082311/sp/208231100/serveFlavor/entryId/1_v5r53ryg/v/11/pv/1/ev/22/flavorId/1_,28nklpt6,dwe1y0nr,wkhnfrer,228nzqef,7xbvhxhq,v7w6ipvb,/forceproxy/true/name/a.mp4.urlset/manifest.mpd
-</BaseURL>
-            </Representation>
-        </AdaptationSet>
-    </Period>
-
-    <Period start="PT5400S"> <!-- 1.5 hours -->
-        <AdaptationSet mimeType="video/mp4" segmentAlignment="true">
-            <Representation id="3" width="1920" height="1080" bandwidth="2000000">
-                <BaseURL>
-https://k-toggle.akamaized.net/edashncl/p/2082311/sp/208231100/serveFlavor/entryId/1_v5r53ryg/v/11/pv/1/ev/22/flavorId/1_,28nklpt6,dwe1y0nr,wkhnfrer,228nzqef,7xbvhxhq,v7w6ipvb,/forceproxy/true/name/a.mp4.urlset/manifest.mpd
-</BaseURL>
-            </Representation>
-        </AdaptationSet>
-    </Period>
-
-    <Period start="PT10800S"> <!-- 3 hours -->
-        <AdaptationSet mimeType="video/mp4" segmentAlignment="true">
-            <Representation id="4" width="1920" height="1080" bandwidth="2000000">
-                <BaseURL>https://k-toggle.akamaized.net/edashncl/p/2082311/sp/208231100/serveFlavor/entryId/1_v5r53ryg/v/11/pv/1/ev/22/flavorId/1_,28nklpt6,dwe1y0nr,wkhnfrer,228nzqef,7xbvhxhq,v7w6ipvb,/forceproxy/true/name/a.mp4.urlset/manifest.mpd
-</BaseURL>
-            </Representation>
-        </AdaptationSet>
-    </Period>
-
-    <!-- More periods as needed -->
+<?xml version='1.0' encoding='UTF-8'?>
+<MPD xmlns="urn:mpeg:dash:schema:mpd:2011" type="dynamic" timeShiftBufferDepth="PT1H" minimumUpdatePeriod="PT5S" mediaPresentationDuration="PT6239S">
+	<Period start="PT0S">
+		<AdaptationSet mimeType="video/mp4" segmentAlignment="true">
+			<Representation id="1" width="1920" height="1080" bandwidth="2000000">
+				<BaseURL>https://k-toggle.akamaized.net/edashncl/p/2082311/sp/208231100/serveFlavor/entryId/1_6bluo7k0/v/1/pv/1/ev/15/flavorId/1_,9p70fe2a,bvjuhges,oou8fy5n,3qogdvf4,avaz3jpr,vvj18zb6,/forceproxy/true/name/a.mp4.urlset/manifest.mpd</BaseURL>
+			</Representation>
+		</AdaptationSet>
+	</Period>
+	<Period start="PT1559S">
+		<AdaptationSet mimeType="video/mp4" segmentAlignment="true">
+			<Representation id="2" width="1920" height="1080" bandwidth="2000000">
+				<BaseURL>https://k-toggle.akamaized.net/edashncl/p/2082311/sp/208231100/serveFlavor/entryId/1_6bluo7k0/v/1/pv/1/ev/15/flavorId/1_,9p70fe2a,bvjuhges,oou8fy5n,3qogdvf4,avaz3jpr,vvj18zb6,/forceproxy/true/name/a.mp4.urlset/manifest.mpd</BaseURL>
+			</Representation>
+		</AdaptationSet>
+	</Period>
+	<Period start="PT3119S">
+		<AdaptationSet mimeType="video/mp4" segmentAlignment="true">
+			<Representation id="3" width="1920" height="1080" bandwidth="2000000">
+				<BaseURL>https://k-toggle.akamaized.net/edashncl/p/2082311/sp/208231100/serveFlavor/entryId/1_6bluo7k0/v/1/pv/1/ev/15/flavorId/1_,9p70fe2a,bvjuhges,oou8fy5n,3qogdvf4,avaz3jpr,vvj18zb6,/forceproxy/true/name/a.mp4.urlset/manifest.mpd</BaseURL>
+			</Representation>
+		</AdaptationSet>
+	</Period>
+	<Period start="PT4679S">
+		<AdaptationSet mimeType="video/mp4" segmentAlignment="true">
+			<Representation id="4" width="1920" height="1080" bandwidth="2000000">
+				<BaseURL>https://k-toggle.akamaized.net/edashncl/p/2082311/sp/208231100/serveFlavor/entryId/1_6bluo7k0/v/1/pv/1/ev/15/flavorId/1_,9p70fe2a,bvjuhges,oou8fy5n,3qogdvf4,avaz3jpr,vvj18zb6,/forceproxy/true/name/a.mp4.urlset/manifest.mpd</BaseURL>
+			</Representation>
+		</AdaptationSet>
+	</Period>
 </MPD>
