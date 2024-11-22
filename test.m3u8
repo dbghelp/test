@@ -1,0 +1,6 @@
+#EXTM3U
+
+#EXTINF:-1  tvg-id="532" tvg-logo="https://poster.starhubgo.com/Linear_channels2/532_1920x1080_HTV.png?w=272", Channel 1
+#KODIPROP:inputstream.adaptive.license_type=clearkey
+#KODIPROP:inputstream.adaptive.license_key=805d8836711153220b3ba151aad22573:777863fb93d22812246114185137a126
+https://raw.githubusercontent.com/dbghelp/test/refs/heads/main/test.mpd
