@@ -21,7 +21,7 @@ jobs:
       - name: install
         run: |
             python -m pip install --upgrade pip
-            pip install beautifulsoup4 requests  # Install bs4 and other dependencies
+            pip install beautifulsoup4 requests pycryptodome  # Install bs4 and other dependencies
         
       - name: run
         run: python log7.py
