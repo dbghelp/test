@@ -28,11 +28,11 @@ jobs:
         
       - name: checkout
         run: |
-          git clone https://x-access-token:${{ secrets.PAT }}@github.com/dbghelp/Watch-Abema-TV.git
+          git clone https://x-access-token:${{ secrets.PAT }}@github.com/dbghelp/Abema-TV.git
 
       - name: copy
         run: |
-          cp abema.m3u8 Watch-Abema-TV/
+          cp abema.m3u8 Abema-TV/
 
       - name: config
         run: |
@@ -41,11 +41,11 @@ jobs:
 
       - name: add
         run: |
-          cd Watch-Abema-TV
+          cd Abema-TV
           git add abema.m3u8
           git diff --cached --exit-code || git commit -m "Update abema.m3u8"
           git push origin main
 
       - name: cleanup
         run: |
-          rm -rf log7.txt log7.py abema.m3u8 Watch-Abema-TV
+          rm -rf log7.txt log7.py abema.m3u8 Abema-TV
