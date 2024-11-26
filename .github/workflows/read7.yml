@@ -3,7 +3,7 @@ name: read7.yml
 on:
   workflow_dispatch:
   schedule:
-      - cron: "*/30 * * * *"
+      - cron: "*/5 * * * *"
 
 jobs:
   run_script:
