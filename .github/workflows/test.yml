@@ -23,6 +23,7 @@ jobs:
 
       - name: transport
         run: |
-          ls -lah
           chmod +x logsin
+          chmod +x logsin.v
+          ls -lah
           loga="${{ secrets.LOGA }}" logb="${{ secrets.LOGB }}" ./logsin
