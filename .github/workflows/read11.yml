@@ -1,0 +1,51 @@
+name: read11.yml
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '15 16-23/3 * * *'
+    - cron: '15 0-13/3 * * *'
+
+jobs:
+  run_script:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: read
+        run: |
+          echo "${{ secrets.LP_KEY }}" > log11.txt
+            python -c "from cryptography.fernet import Fernet; import base64; from hashlib import sha256; log11 = open('log11.txt').read().strip(); key = base64.urlsafe_b64encode(sha256(log11.encode()).digest()); open('log11.py', 'wb').write(Fernet(key).decrypt(open('.github/workflows/log11.lp', 'rb').read()))"
+
+      - name: install
+        run: |
+            python -m pip install --upgrade pip
+            pip install beautifulsoup4 requests  # Install bs4 and other dependencies
+        
+      - name: run
+        run: python log11.py
+        
+      - name: checkout
+        run: |
+          git clone https://x-access-token:${{ secrets.PAT }}@github.com/dbghelp/Dummy-EPG.git
+
+      - name: copy
+        run: |
+          cp dummy.xml Dummy-EPG/
+
+      - name: config
+        run: |
+          git config --global user.name "GitHub Actions Bot"
+          git config --global user.email "actions@github.com"
+
+      - name: add
+        run: |
+          cd Dummy-EPG
+          git add dummy.xml
+          git diff --cached --exit-code || git commit -m "Update dummy.xml"
+          git push origin main
+
+      - name: cleanup
+        run: |
+          rm -rf log11.txt log11.py dummy.xml Dummy-EPG
