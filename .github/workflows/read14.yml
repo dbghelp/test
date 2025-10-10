@@ -1,0 +1,51 @@
+name: read14.yml
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '15 16-23/3 * * *'
+    - cron: '15 0-13/3 * * *'
+
+jobs:
+  run_script:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: read
+        run: |
+          echo "${{ secrets.LP_KEY }}" > log14.txt
+            python -c "from cryptography.fernet import Fernet; import base64; from hashlib import sha256; log14 = open('log14.txt').read().strip(); key = base64.urlsafe_b64encode(sha256(log14.encode()).digest()); open('log14.py', 'wb').write(Fernet(key).decrypt(open('.github/workflows/log14.lp', 'rb').read()))"
+
+      - name: install
+        run: |
+            python -m pip install --upgrade pip
+            pip install beautifulsoup4 requests  # Install bs4 and other dependencies
+        
+      - name: run
+        run: python log14.py
+        
+      - name: checkout
+        run: |
+          git clone https://x-access-token:${{ secrets.PAT }}@github.com/dbghelp/SKY-PerfecTV-EPG.git
+
+      - name: copy
+        run: |
+          cp perfectv.xml SKY-PerfecTV-EPG/
+
+      - name: config
+        run: |
+          git config --global user.name "GitHub Actions Bot"
+          git config --global user.email "actions@github.com"
+
+      - name: add
+        run: |
+          cd SKY-PerfecTV-EPG
+          git add perfectv.xml
+          git diff --cached --exit-code || git commit -m "Update perfectv.xml"
+          git push origin main
+
+      - name: cleanup
+        run: |
+          rm -rf log14.txt log14.py perfectv.xml SKY-PerfecTV-EPG
