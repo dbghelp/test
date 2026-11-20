@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v7
 
       - name: read
         run: |
@@ -21,7 +21,7 @@ jobs:
       - name: install
         run: |
             python -m pip install --upgrade pip
-            pip install beautifulsoup4 requests  # Install bs4 and other dependencies
+            pip install beautifulsoup4 requests pytz  # Install bs4 and other dependencies
         
       - name: run
         run: python log5.py
