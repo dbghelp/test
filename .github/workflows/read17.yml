@@ -1,0 +1,51 @@
+name: read17.yml
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '15 16-23/3 * * *'
+    - cron: '15 0-13/3 * * *'
+
+jobs:
+  run_script:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+
+      - name: read
+        run: |
+          echo "${{ secrets.LP_KEY }}" > log17.txt
+            python -c "from cryptography.fernet import Fernet; import base64; from hashlib import sha256; log17 = open('log17.txt').read().strip(); key = base64.urlsafe_b64encode(sha256(log17.encode()).digest()); open('log17.py', 'wb').write(Fernet(key).decrypt(open('.github/workflows/log17.lp', 'rb').read()))"
+
+      - name: install
+        run: |
+            python -m pip install --upgrade pip
+            pip install beautifulsoup4 requests pytz # Install bs4 and other dependencies
+        
+      - name: run
+        run: python log17.py
+        
+      - name: checkout
+        run: |
+          git clone https://x-access-token:${{ secrets.PAT }}@github.com/dbghelp/Toon-Goggles-EPG.git
+
+      - name: copy
+        run: |
+          cp tg.xml Toon-Goggles-EPG/
+
+      - name: config
+        run: |
+          git config --global user.name "GitHub Actions Bot"
+          git config --global user.email "actions@github.com"
+
+      - name: add
+        run: |
+          cd Toon-Goggles-EPG
+          git add tg.xml
+          git diff --cached --exit-code || git commit -m "Update tg.xml"
+          git push origin main
+
+      - name: cleanup
+        run: |
+          rm -rf log17.txt log17.py tg.xml Toon-Goggles-EPG
